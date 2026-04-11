@@ -1,0 +1,8 @@
+package com.municipia.api.application.port.in;
+
+import com.municipia.api.domain.model.Incident;
+import java.util.List;
+
+public interface ListIncidentsUseCase {
+    List<Incident> listByMunicipality(Long municipalityId);
+}
