@@ -76,10 +76,7 @@ web_modules/
 
 # Next.js build output
 .next
-out
-# Keep the backend hexagonal ports tracked even though they live in a folder named `out`.
-!backend/src/main/java/com/neria_municipio/api/application/port/out/
-!backend/src/main/java/com/neria_municipio/api/application/port/out/*.java
+/out
 
 # Nuxt.js build / generate output
 .nuxt
