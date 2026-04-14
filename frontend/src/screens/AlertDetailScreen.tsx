@@ -5,7 +5,7 @@ import { colors } from '../theme/colors';
 import { fontFamilies, fontSizes } from '../theme/typography';
 
 const AlertDetailScreen = () => (
-  <Screen title="Detalle de alerta">
+  <Screen title="Detalle de alerta" showBack>
     <View style={styles.card}>
       <Text style={styles.title}>Actualización municipal</Text>
       <Text style={styles.body}>

@@ -7,7 +7,7 @@ import { MapStackParamList } from './types';
 const Stack = createNativeStackNavigator<MapStackParamList>();
 
 const MapStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
+  <Stack.Navigator screenOptions={{ headerShown: false, animation: 'slide_from_left' }}>
     <Stack.Screen name="CityMapHome" component={CityMapScreen} />
     <Stack.Screen name="PointDetail" component={MapPointDetailScreen} />
   </Stack.Navigator>

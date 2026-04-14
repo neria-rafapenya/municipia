@@ -1,4 +1,5 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { ImageSourcePropType } from "react-native";
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -26,6 +27,18 @@ export type DrawerStackParamList = {
   ReportHistory: undefined;
   Profile: undefined;
   Settings: undefined;
+  IncidentDetail: { id: string } | undefined;
+  ChatAI: undefined;
+  NewsDetail: { item: NewsItem };
+};
+
+export type NewsItem = {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  image?: ImageSourcePropType | null;
+  imageUrl?: string | null;
 };
 
 export type MainTabParamList = {

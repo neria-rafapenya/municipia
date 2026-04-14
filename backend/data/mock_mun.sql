@@ -11,12 +11,12 @@ ON DUPLICATE KEY UPDATE
 
 INSERT INTO mun_users (id, municipality_id, email, password_hash, role)
 VALUES
-  (1, 1, 'vecino1@creixell.cat', '$2y$10$RzH/YU3bs5D1ypai4zEZIeUyh4CL8yugpE7nmEmKdo5gkbxj25.7O', 'NEIGHBOR'),
-  (2, 1, 'operario@creixell.cat', '$2y$10$RzH/YU3bs5D1ypai4zEZIeUyh4CL8yugpE7nmEmKdo5gkbxj25.7O', 'OPERATOR'),
-  (3, 1, 'admin@creixell.cat', '$2y$10$RzH/YU3bs5D1ypai4zEZIeUyh4CL8yugpE7nmEmKdo5gkbxj25.7O', 'ADMIN'),
-  (4, 2, 'vecino1@altafulla.cat', '$2y$10$RzH/YU3bs5D1ypai4zEZIeUyh4CL8yugpE7nmEmKdo5gkbxj25.7O', 'NEIGHBOR'),
-  (5, 2, 'operario@altafulla.cat', '$2y$10$RzH/YU3bs5D1ypai4zEZIeUyh4CL8yugpE7nmEmKdo5gkbxj25.7O', 'OPERATOR'),
-  (6, 2, 'admin@altafulla.cat', '$2y$10$RzH/YU3bs5D1ypai4zEZIeUyh4CL8yugpE7nmEmKdo5gkbxj25.7O', 'ADMIN')
+  (1, 1, 'vecino1@creixell.cat', '$2y$10$K5EzX8tjDdZ.PaVnefJhXu0RPiot5DJSjxQxkuNI4rlqepbFvzcrS', 'NEIGHBOR'),
+  (2, 1, 'operario@creixell.cat', '$2y$10$K5EzX8tjDdZ.PaVnefJhXu0RPiot5DJSjxQxkuNI4rlqepbFvzcrS', 'OPERATOR'),
+  (3, 1, 'admin@creixell.cat', '$2y$10$K5EzX8tjDdZ.PaVnefJhXu0RPiot5DJSjxQxkuNI4rlqepbFvzcrS', 'ADMIN'),
+  (4, 2, 'vecino1@altafulla.cat', '$2y$10$K5EzX8tjDdZ.PaVnefJhXu0RPiot5DJSjxQxkuNI4rlqepbFvzcrS', 'NEIGHBOR'),
+  (5, 2, 'operario@altafulla.cat', '$2y$10$K5EzX8tjDdZ.PaVnefJhXu0RPiot5DJSjxQxkuNI4rlqepbFvzcrS', 'OPERATOR'),
+  (6, 2, 'admin@altafulla.cat', '$2y$10$K5EzX8tjDdZ.PaVnefJhXu0RPiot5DJSjxQxkuNI4rlqepbFvzcrS', 'ADMIN')
 ON DUPLICATE KEY UPDATE
   municipality_id = VALUES(municipality_id),
   email = VALUES(email),

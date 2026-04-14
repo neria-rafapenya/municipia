@@ -1,8 +1,8 @@
 export const fontFamilies = {
-  regular: 'SpaceGrotesk_400Regular',
-  medium: 'SpaceGrotesk_500Medium',
-  semiBold: 'SpaceGrotesk_600SemiBold',
-  bold: 'SpaceGrotesk_700Bold',
+  regular: 'Roboto_400Regular',
+  medium: 'Roboto_500Medium',
+  semiBold: 'Roboto_700Bold',
+  bold: 'Roboto_900Black',
 };
 
 export const fontSizes = {

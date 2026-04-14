@@ -10,11 +10,11 @@
     <relativePath/>
   </parent>
 
-  <groupId>com.municipia</groupId>
+  <groupId>com.neria_municipio</groupId>
   <artifactId>backend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>municipia-backend</name>
-  <description>Municipia backend</description>
+  <name>neria_municipio-backend</name>
+  <description>Neria Municipio backend</description>
 
   <properties>
     <java.version>17</java.version>
@@ -25,6 +25,16 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-resolver-dns-native-macos</artifactId>
+      <classifier>osx-aarch_64</classifier>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
