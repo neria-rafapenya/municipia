@@ -55,4 +55,11 @@ public class ApiExceptionHandler {
                 : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(ErrorResponse.of(status.toString(), message));
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalState(IllegalStateException ex) {
+        String message = ex.getMessage() != null ? ex.getMessage() : "Internal error";
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.toString(), message));
+    }
 }

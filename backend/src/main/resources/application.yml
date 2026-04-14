@@ -24,7 +24,7 @@ spring:
       max-file-size: 15MB
       max-request-size: 15MB
   flyway:
-    enabled: false
+    enabled: true
 
 app:
   cors:

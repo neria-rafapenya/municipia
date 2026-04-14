@@ -35,10 +35,16 @@ public class JwtService implements AuthTokenPort {
 
     @Override
     public AuthToken issueToken(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is required");
+        }
         return issueToken(user.id(), user.municipalityId(), user.email(), user.role());
     }
 
     public AuthToken issueToken(Long userId, Long municipalityId, String email, UserRole role) {
+        if (userId == null || municipalityId == null || email == null || role == null) {
+            throw new IllegalArgumentException("Invalid user data for token issuance");
+        }
         Instant now = Instant.now();
         Instant expiresAt = now.plus(expirationMinutes, ChronoUnit.MINUTES);
 

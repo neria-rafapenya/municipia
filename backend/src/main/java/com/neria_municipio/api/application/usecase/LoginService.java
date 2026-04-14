@@ -27,6 +27,10 @@ public class LoginService implements LoginUseCase {
         User user = userPort.findByEmail(command.email())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
 
+        if (user.role() == null) {
+            throw new IllegalArgumentException("Invalid user role");
+        }
+
         String storedHash = user.passwordHash();
         boolean matches;
         if (storedHash != null && storedHash.startsWith("$2")) {
