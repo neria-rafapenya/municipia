@@ -24,7 +24,7 @@ spring:
       max-file-size: 15MB
       max-request-size: 15MB
   flyway:
-    enabled: true
+    enabled: ${SPRING_FLYWAY_ENABLED:false}
     locations: classpath:db/migration
     table: flyway_schema_history_municipia
     baseline-on-migrate: true
