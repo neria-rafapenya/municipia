@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { request } from "../api/client";
 import {
   CategoryResponse,
   IncidentResponse,
@@ -9,7 +8,7 @@ import {
   PagedResponse,
   UserResponse,
 } from "../api/types";
-import { Badge, Button, Card, SectionHeader } from "../components/UI";
+import { Badge, Card, SectionHeader } from "../components/UI";
 
 type Counts = {
   users: number;
@@ -35,7 +34,7 @@ const DashboardPage = () => {
           apiFetch<CategoryResponse[]>(`/api/categories?municipalityId=${municipalityId}`),
           apiFetch<NewsResponse[]>(`/api/news?municipalityId=${municipalityId}`),
           apiFetch<PagedResponse<IncidentResponse>>(
-            `/api/incidents?municipalityId=${municipalityId}&page=0&size=1&sort=createdAt,desc`
+            `/api/incidents?municipalityId=${municipalityId}&page=0&size=1&sort=id,desc`
           ),
         ]);
 
@@ -102,12 +101,12 @@ const DashboardPage = () => {
         <Card>
           <h2 className="section-title">Acceso rápido</h2>
           <div className="actions">
-            <Button as={undefined as never} variant="secondary">
-              <Link to="/news">Nueva noticia</Link>
-            </Button>
-            <Button variant="secondary">
-              <Link to="/incidents">Nueva incidencia</Link>
-            </Button>
+            <Link to="/news" className="button secondary">
+              Nueva noticia
+            </Link>
+            <Link to="/incidents" className="button secondary">
+              Nueva incidencia
+            </Link>
           </div>
         </Card>
         <Card>

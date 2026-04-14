@@ -1,27 +1,42 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { Button, Card, Field, Input } from "../components/UI";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loading, token } = useAuth();
   const [email, setEmail] = useState("admin@creixell.cat");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  if (loading) {
+    return (
+      <div className="boot-screen">
+        <div className="boot-card">
+          <div className="spinner" />
+          <p>Preparando acceso...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      setLoading(true);
+      setSubmitting(true);
       setError(null);
       await login(email.trim(), password);
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
       setError(err?.message || "No se pudo iniciar sesión");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -58,8 +73,8 @@ const LoginPage = () => {
 
           {error ? <div className="error-box">{error}</div> : null}
 
-          <Button type="submit" disabled={loading}>
-            {loading ? "Entrando..." : "Entrar"}
+          <Button type="submit" disabled={submitting}>
+            {submitting ? "Entrando..." : "Entrar"}
           </Button>
         </form>
       </Card>

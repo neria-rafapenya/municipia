@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   ApiError,
   request,
@@ -18,6 +25,7 @@ type AuthContextValue = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshSession: () => Promise<string | null>;
+  refreshProfile: () => Promise<AuthProfile | null>;
   apiFetch: <T,>(path: string, options?: RequestInit) => Promise<T>;
 };
 
@@ -41,15 +49,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [profile, setProfile] = useState<AuthProfile | null>(null);
 
-  const persistToken = async (value: string | null) => {
+  const persistToken = useCallback(async (value: string | null) => {
     if (value) {
       localStorage.setItem(TOKEN_KEY, value);
     } else {
       localStorage.removeItem(TOKEN_KEY);
     }
-  };
+  }, []);
 
-  const refreshSession = async (): Promise<string | null> => {
+  const refreshSession = useCallback(async (): Promise<string | null> => {
     if (!token) return null;
     const refreshed = await requestWithToken<TokenResponse>(token, "/api/auth/refresh", {
       method: "POST",
@@ -57,9 +65,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(refreshed.accessToken);
     await persistToken(refreshed.accessToken);
     return refreshed.accessToken;
-  };
+  }, [token, persistToken]);
 
-  const bootstrap = async () => {
+  const refreshProfile = useCallback(async (): Promise<AuthProfile | null> => {
+    if (!token) return null;
+    const me = await loadProfile(token);
+    setProfile(me);
+    return me;
+  }, [token]);
+
+  const bootstrap = useCallback(async () => {
     const stored = localStorage.getItem(TOKEN_KEY);
     if (!stored) {
       setLoading(false);
@@ -95,13 +110,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [persistToken]);
 
   useEffect(() => {
     bootstrap();
-  }, []);
+  }, [bootstrap]);
 
-  const login = async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
     const result = await request<TokenResponse>("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -110,15 +125,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(result.accessToken);
     setProfile(me);
     await persistToken(result.accessToken);
-  };
+  }, [persistToken]);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     setToken(null);
     setProfile(null);
     await persistToken(null);
-  };
+  }, [persistToken]);
 
-  const apiFetch = async <T,>(path: string, options: RequestInit = {}): Promise<T> => {
+  const apiFetch = useCallback(async <T,>(path: string, options: RequestInit = {}): Promise<T> => {
     if (!token) {
       throw new Error("Not authenticated");
     }
@@ -135,7 +150,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
       throw error;
     }
-  };
+  }, [logout, refreshSession, token]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -146,9 +161,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       login,
       logout,
       refreshSession,
+      refreshProfile,
       apiFetch,
     }),
-    [loading, token, profile]
+    [loading, token, profile, login, logout, refreshSession, refreshProfile, apiFetch]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
